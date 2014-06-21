@@ -6,10 +6,22 @@ class window.App extends Backbone.Model
 
   newGame: ->
     @set 'deck', deck = new Deck()
-    @set 'communityHand', new Hand [], deck, true
-    @set 'playerHand', new Hand [deck.pop(), deck.pop()], deck, false
+    @set 'communityHand', new Hand [], deck, true, 'Community'
+    @set 'hands', []
+    @createPlayerHand('Greg')
+    @createPlayerHand('Jasen')
     @set 'toDos', ['river', 'turn', 'flop']
     @trigger('newGame', @)
+
+  createPlayerHand: (name) ->
+    hands = @get 'hands'
+    deck = @get 'deck'
+    hands.push(new Hand [deck.pop(), deck.pop()], @get('deck'), false, name)
+
+  eachHand: (cb)=>
+    hands = @get 'hands'
+    for hand in hands
+      cb hand
 
   endGame: ->
     do @newGame
@@ -20,8 +32,10 @@ class window.App extends Backbone.Model
 
     dealToCommunity = (card) =>
       card.set({'community': true})
-      @get('playerHand').add card
       @get('communityHand').add card
+      @eachHand (hand) =>
+        hand.add card
+
 
     if toDo is 'flop'
       cards = [deck.pop(), deck.pop(), deck.pop()]

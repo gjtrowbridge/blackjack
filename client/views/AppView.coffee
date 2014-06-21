@@ -3,7 +3,6 @@ class window.AppView extends Backbone.View
   template: _.template '
     <button class="continue-button">Continue</button>
     <div class="community-hand-container"></div>
-    <div class="player-hand-container"></div>
   '
 
   events:
@@ -17,7 +16,10 @@ class window.AppView extends Backbone.View
     @$el.children().detach()
     @$el.html @template()
     @$('.community-hand-container').html new HandView(collection: @model.get 'communityHand').el
-    @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
+    hands = @model.get 'hands'
+    _.each hands, (hand) =>
+      $playerDiv = $('<div>',{class:'playerHand'}).html new HandView(collection: hand).el
+      @$el.append($playerDiv)
 
   continueGame: ->
     @model.continue

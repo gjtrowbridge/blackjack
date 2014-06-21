@@ -2,11 +2,11 @@ class window.Hand extends Backbone.Collection
 
   model: Card
 
-  initialize: (array, @deck, @community) ->
+  initialize: (array, @deck, @community, @playerName) ->
     @on('add', @storeBestHand, @)
     @handIndex = 0
     @handName = ''
-    @handRank = 0
+    @handRank = -1
 
   checkForFlush: (suitObj)->
     for suit in ['Hearts', 'Spades', 'Clubs', 'Diamonds']
