@@ -3,5 +3,5 @@ class window.App extends Backbone.Model
 
   initialize: ->
     @set 'deck', deck = new Deck()
-    @set 'playerHand', deck.dealPlayer()
-    @set 'dealerHand', deck.dealDealer()
+    @set 'communityHand', new Hand [], deck, true
+    @set 'playerHand', new Hand [deck.pop(), deck.pop()], deck
