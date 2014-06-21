@@ -17,3 +17,6 @@ class window.AppView extends Backbone.View
     @$el.html @template()
     @$('.community-hand-container').html new HandView(collection: @model.get 'communityHand').el
     @$('.player-hand-container').html new HandView(collection: @model.get 'playerHand').el
+
+  continueGame: ->
+    @model.continue
