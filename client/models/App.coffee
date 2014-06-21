@@ -10,6 +10,9 @@ class window.App extends Backbone.Model
     @set 'playerHand', new Hand [deck.pop(), deck.pop()], deck, false
     @set 'toDos', ['river', 'turn', 'flop']
 
+  endGame: ->
+    console.log('game over!')
+
   continueGame: ->
     toDo = @get('toDos').pop()
     deck = @get('deck')
@@ -26,4 +29,6 @@ class window.App extends Backbone.Model
       dealToCommunity deck.pop()
     else if toDo is 'river'
       dealToCommunity deck.pop()
+    else
+      @endGame()
 

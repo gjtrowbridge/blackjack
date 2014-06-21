@@ -13,8 +13,6 @@ class window.HandView extends Backbone.View
     @$el.children().detach()
     @$el.html @template @collection
     @$el.append @collection.map (card) =>
-      console.log(@)
-      console.log("#{@community} #{card.get('community')}")
-      new CardView(model: card).$el if card.get('community') isnt @community
+      new CardView(model: card).$el if card.get('community') is @collection.community
     @$('.handDescription').text @collection.getBestHand()
 
