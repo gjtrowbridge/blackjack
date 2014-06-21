@@ -9,9 +9,10 @@ class window.App extends Backbone.Model
     @set 'communityHand', new Hand [], deck, true
     @set 'playerHand', new Hand [deck.pop(), deck.pop()], deck, false
     @set 'toDos', ['river', 'turn', 'flop']
+    @trigger('newGame', @)
 
   endGame: ->
-    console.log('game over!')
+    do @newGame
 
   continueGame: ->
     toDo = @get('toDos').pop()

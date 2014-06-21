@@ -10,6 +10,7 @@ class window.AppView extends Backbone.View
     "click .continue-button": -> @model.continueGame()
 
   initialize: ->
+    @model.on('newGame', @render, @)
     @render()
 
   render: ->
