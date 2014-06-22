@@ -15,4 +15,4 @@ class window.HandView extends Backbone.View
     @$el.append @collection.map (card) =>
       new CardView(model: card).$el if card.get('community') is @collection.community
     @$('.handDescription').text @collection.handName
-
+    if @collection.winner then @$el.find('h2').html(@$el.find('h2').html() + ' <----WINNER!')

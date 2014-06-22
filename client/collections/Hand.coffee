@@ -7,6 +7,7 @@ class window.Hand extends Backbone.Collection
     @handIndex = 0
     @handName = ''
     @handRank = -1
+    @winner = false
 
   checkForFlush: (suitObj)->
     for suit in ['Hearts', 'Spades', 'Clubs', 'Diamonds']
@@ -15,6 +16,10 @@ class window.Hand extends Backbone.Collection
   storeBestHand: ->
     if not @community and @length >= 5
       @eachHand @checkHand
+
+  declareWinner: ->
+    @winner = true
+    @trigger 'change', @
 
   eachHand: (cb)->
     if @length is 5

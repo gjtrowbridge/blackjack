@@ -9,7 +9,7 @@ class window.App extends Backbone.Model
     @set 'communityHand', new Hand [], deck, true, 'Community'
     @set 'hands', []
     @createPlayerHand('Greg')
-    @createPlayerHand('Jasen')
+    @createPlayerHand('Evil Robot')
     @set 'toDos', ['river', 'turn', 'flop']
     @trigger('newGame', @)
 
@@ -25,6 +25,19 @@ class window.App extends Backbone.Model
 
   endGame: ->
     do @newGame
+
+  determineWinner: ->
+    bestHand = null
+    @eachHand (hand)->
+      if bestHand?
+        if bestHand.handRank < hand.handRank
+          bestHand = hand
+        else if bestHand.handRank is hand.handRank and bestHand.handIndex < hand.handIndex
+          bestHand = hand
+      else
+        bestHand = hand
+    do bestHand.declareWinner
+
 
   continueGame: ->
     toDo = @get('toDos').pop()
@@ -44,6 +57,8 @@ class window.App extends Backbone.Model
       dealToCommunity deck.pop()
     else if toDo is 'river'
       dealToCommunity deck.pop()
+      console.log('winners')
+      do @determineWinner
     else
-      @endGame()
+      do @endGame
 
